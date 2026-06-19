@@ -84,7 +84,7 @@
 
   /* podium scoreboard */
   .scoreboard{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
-  .sb{position:relative;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:20px 18px 18px;overflow:hidden}
+  .sb{position:relative;background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:20px 96px 14px 18px;overflow:hidden}
   .sb .rk{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.18em}
   .sb .nm{font-size:26px;font-weight:850;letter-spacing:-.02em;margin-top:4px}
   .sb .pts{font-family:var(--mono);font-size:clamp(34px,6vw,52px);font-weight:800;line-height:1;margin-top:12px;font-variant-numeric:tabular-nums}
@@ -96,6 +96,7 @@
   .sb.g2 .bar{background:var(--accent)} .sb.g2 .pts{color:var(--accent)}
   .sb.g3 .bar{background:var(--cyan)} .sb.g3 .pts{color:var(--cyan)}
   .sb .crown{position:absolute;right:14px;top:14px;font-size:22px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+  .sb .chibi{position:absolute;right:-2px;bottom:0;width:96px;height:auto;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));pointer-events:none}
 
   /* ---- generic panel / chart ---- */
   .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
@@ -136,8 +137,16 @@
 
   /* cast cards */
   .cast{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-  .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;overflow:hidden}
+  .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;overflow:hidden;display:flex;gap:12px;align-items:stretch}
+  .card .cbody{flex:1;min-width:0}
+  .card .chibi{width:110px;flex:none;align-self:flex-end;margin:0 -2px -12px 0;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
   .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+  /* team lineup */
+  .lineup{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 24px;padding:16px 12px;background:var(--ground-2);border:1px solid var(--line-soft);border-radius:16px}
+  .lineup figure{margin:0;flex:1 1 90px;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .lineup img{height:96px;width:auto;filter:drop-shadow(0 5px 10px rgba(0,0,0,.5));transition:transform .2s ease}
+  .lineup figure:hover img{transform:translateY(-6px) scale(1.06)}
+  .lineup figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.04em}
   .card .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
   .card .who{display:flex;align-items:baseline;gap:10px}
   .card .who .nm{font-size:22px;font-weight:850;letter-spacing:-.02em}
@@ -291,6 +300,7 @@
       <h2>Seven forecasters, seven personalities</h2>
       <p>Ranked where they sit right now. Each one predicts &mdash; and trash-talks &mdash; in a completely different key.</p>
     </div>
+    <div class="lineup rv" id="lineup"></div>
     <div class="cast" id="cast"></div>
   </section>
 
@@ -439,7 +449,8 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
     const pts=D.cum[p][8];
     const d=document.createElement("div");
     d.className="sb g"+r;
-    d.innerHTML=`<span class="bar"></span>${crown[p]?`<span class="crown">${crown[p]}</span>`:""}
+    d.innerHTML=`<span class="bar"></span>
+      <img class="chibi" src="assets/chibi/${p.toLowerCase()}.webp" alt="${p} chibi" loading="lazy">
       <div class="rk">${r===1?"1ST · LEADER":r===2?"2ND":"3RD"}</div>
       <div class="nm">${p}</div>
       <div class="pts"><span class="cnt" data-to="${pts}">0</span><small>pts</small></div>
@@ -558,13 +569,26 @@ function animateRace(){
     const f=D.fp[p];
     const card=document.createElement("div");card.className="card";card.style.setProperty("--c",D.color[p]);
     card.innerHTML=`
-      <div class="top">
-        <div class="who"><span class="nm">${p}</span><span class="role">${f.role}</span></div>
-        <div class="rkpts"><div class="p">${f.pts}</div><div class="r">#${f.rank} · pts</div></div>
+      <div class="cbody">
+        <div class="top">
+          <div class="who"><span class="nm">${p}</span><span class="role">${f.role}</span></div>
+          <div class="rkpts"><div class="p">${f.pts}</div><div class="r">#${f.rank} · pts</div></div>
+        </div>
+        <p class="quote">${f.quote}</p>
+        <div class="fp">${f.fp}</div>
       </div>
-      <p class="quote">${f.quote}</p>
-      <div class="fp">${f.fp}</div>`;
+      <img class="chibi" src="assets/chibi/${p.toLowerCase()}.webp" alt="${p}, ${f.role}" loading="lazy">`;
     host.appendChild(card);
+  });
+})();
+
+/* ---------- TEAM LINEUP ---------- */
+(function(){
+  const host=document.getElementById("lineup"); if(!host) return;
+  [...D.players].sort((a,b)=>D.fp[a].rank-D.fp[b].rank).forEach(p=>{
+    const fig=document.createElement("figure");
+    fig.innerHTML=`<img src="assets/chibi/${p.toLowerCase()}.webp" alt="${p} chibi" loading="lazy"><figcaption style="color:${D.color[p]}">${p}</figcaption>`;
+    host.appendChild(fig);
   });
 })();
 

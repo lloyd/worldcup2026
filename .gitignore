@@ -1,2 +1,9 @@
 .DS_Store
 *.log
+.env
+.env.*
+*.key
+# private source photos & generated likenesses (do not publish to public repo)
+characters/raw/
+photos/
+secrets/
