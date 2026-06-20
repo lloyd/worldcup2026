@@ -181,6 +181,24 @@
   .v-whiff{color:var(--accent);border:1px solid rgba(255,61,127,.4)}
   .v-bull{color:var(--gold);border:1px solid rgba(245,197,24,.4)}
 
+  /* nailed it — perfect (5-pt) predictions */
+  .nailed-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .nail{position:relative;overflow:hidden;background:linear-gradient(155deg,rgba(245,197,24,.10),var(--panel) 58%);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;gap:18px;align-items:center}
+  .nail.lead{grid-column:1/-1;box-shadow:0 0 0 1px rgba(245,197,24,.28), 0 24px 60px -34px rgba(245,197,24,.5)}
+  .nail .badge{position:absolute;right:0;top:0;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#1a1304;background:var(--gold);padding:4px 10px;border-bottom-left-radius:10px;font-weight:700}
+  .nail .score{font-family:var(--mono);font-weight:800;color:var(--gold);line-height:.92;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:clamp(34px,6vw,50px);flex:none}
+  .nail.lead .score{font-size:clamp(46px,9vw,74px)}
+  .nail .score small{display:block;font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;margin-top:7px;font-weight:600}
+  .nail .meta{flex:1;min-width:0}
+  .nail .mu{font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .nail .when{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:3px;letter-spacing:.03em}
+  .nail .rare{margin-top:10px;font-size:13.5px;color:var(--text)}
+  .nail .rare b{color:var(--gold);font-family:var(--mono)}
+  .nail .chibis{display:flex;gap:2px;align-items:flex-end;flex:none}
+  .nail .chibis img{height:58px;width:auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
+  .nail.lead .chibis img{height:86px}
+  @media (max-width:760px){.nailed-grid{grid-template-columns:1fr} .nail{flex-wrap:wrap;gap:12px}}
+
   /* banter (imessage) */
   .chat{display:flex;flex-direction:column;gap:11px;max-width:680px;margin:0 auto}
   .msg{max-width:78%;padding:11px 15px;border-radius:19px;font-size:15.5px;line-height:1.35;position:relative}
@@ -334,10 +352,20 @@
     <div class="panel rv"><div class="bold-list" id="bold"></div></div>
   </section>
 
+  <!-- ========================= NAILED IT ========================= -->
+  <section id="nailed">
+    <div class="sec-head rv">
+      <p class="eyebrow">07 — Nailed it</p>
+      <h2>The perfect calls</h2>
+      <p>A perfect prediction &mdash; the exact scoreline &mdash; is worth <b style="color:var(--gold)">5 points</b> and almost never lands. Here are the confirmed bullseyes, ranked by how few people saw them coming. (More join the board as results come in.)</p>
+    </div>
+    <div class="nailed-grid rv" id="nailedboard"></div>
+  </section>
+
   <!-- ========================= BANTER ========================= -->
   <section id="banter">
     <div class="sec-head rv">
-      <p class="eyebrow">07 — The group chat</p>
+      <p class="eyebrow">08 — The group chat</p>
       <h2>The banter hall of fame</h2>
       <p>The predictions are the excuse. This is the actual point.</p>
     </div>
@@ -347,7 +375,7 @@
   <!-- ========================= SCORING ========================= -->
   <section id="scoring">
     <div class="sec-head rv">
-      <p class="eyebrow">08 — The rulebook</p>
+      <p class="eyebrow">09 — The rulebook</p>
       <h2>How a point is won</h2>
       <p>Locked in before the opening game, after the customary round of &ldquo;should we do triple points?&rdquo; chaos.</p>
     </div>
@@ -418,6 +446,11 @@ const D = {
     {g:5,by:"George",d:2,m:"Canada 2-3 Bosnia",v:""},
     {g:5,by:"George",d:7,m:"England 3-2 Croatia",v:""},
     {g:5,by:"Lainie",d:3,m:"Haiti 0-4 Scotland",v:""},
+  ],
+  nailed:[
+    {home:"France",hs:3,as:1,away:"Senegal",day:6,by:["Jon","Lainie"],called:2,of:7,badge:"Most improbable call"},
+    {home:"South Korea",hs:2,as:1,away:"Czechia",day:1,by:["George","Jake"],called:2,of:7,badge:"First perfects of the cup"},
+    {home:"Mexico",hs:2,as:0,away:"South Africa",day:1,by:["Jon","Gabe"],called:2,of:6,badge:""},
   ],
   chat:[
     {s:"Lloyd",me:true,t:"Also coulda been mbappe hadda poo. That happened to me on Saturday. Super sluggish first half #pooknowledge"},
@@ -645,6 +678,28 @@ function animateRace(){
     r.innerHTML=`<div class="g">${b.g}<small> g</small></div>
       <div class="m">${b.m}<div class="by">${b.by} · ${D.dayLabel[b.d]} · ${D.dayDate[b.d]}</div></div>${v}`;
     host.appendChild(r);
+  });
+})();
+
+/* ---------- NAILED IT ---------- */
+(function(){
+  const host=document.getElementById("nailedboard"); if(!host) return;
+  D.nailed.forEach((n,idx)=>{
+    const lead=idx===0;
+    const card=document.createElement("div");card.className="nail"+(lead?" lead":"");
+    const chibis=n.by.map(p=>`<img src="assets/chibi/${p.toLowerCase()}.webp" alt="${p} chibi" loading="lazy">`).join("");
+    const names=n.by.map(p=>`<b style="color:${D.color[p]}">${p}</b>`).join(" &amp; ");
+    card.innerHTML=`
+      ${n.badge?`<span class="badge">${n.badge}</span>`:""}
+      <div class="score">${n.hs}&ndash;${n.as}<small>perfect · +5</small></div>
+      <div class="meta">
+        <div class="mu">${n.home} v ${n.away}</div>
+        <div class="when">${D.dayLabel[n.day]} · ${D.dayDate[n.day]}</div>
+        <div class="rare">Only <b>${n.called} of ${n.of}</b> called this exact scoreline.</div>
+        <div class="names" style="margin-top:6px;font-size:14px;color:var(--muted)">Nailed by ${names}</div>
+      </div>
+      <div class="chibis">${chibis}</div>`;
+    host.appendChild(card);
   });
 })();
 
