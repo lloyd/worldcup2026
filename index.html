@@ -114,13 +114,13 @@
   .race-note b{color:var(--gold)}
 
   /* heatmap */
-  .hm-grid{display:grid;gap:4px;min-width:560px}
-  .hm-row{display:grid;grid-template-columns:96px repeat(8,1fr);gap:4px;align-items:center}
+  .hm-grid{display:grid;gap:4px;min-width:660px}
+  .hm-row{display:grid;grid-template-columns:96px repeat(9,1fr);gap:4px;align-items:center}
   .hm-name{font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px}
   .hm-name .sw{width:9px;height:9px;border-radius:50%}
   .hm-cell{aspect-ratio:1.45/1;border-radius:7px;display:flex;align-items:center;justify-content:center;
     font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;color:#06120c;font-weight:700;border:1px solid rgba(255,255,255,.04)}
-  .hm-head{display:grid;grid-template-columns:96px repeat(8,1fr);gap:4px;margin-bottom:6px}
+  .hm-head{display:grid;grid-template-columns:96px repeat(9,1fr);gap:4px;margin-bottom:6px}
   .hm-head div{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;letter-spacing:.02em}
   .hm-head .col{position:relative}
   .hm-head .col.cold span{color:var(--cyan)} .hm-head .col.hot span{color:var(--accent)}
@@ -227,14 +227,14 @@
     <div class="floods"></div>
     <p class="eyebrow">The Yarris &times; Hilaiel group chat &nbsp;·&nbsp; <b>FIFA World Cup 2026</b></p>
     <h1>The Prediction<br>League
-      <span class="small">Seven people. Eight matchdays. Twenty-eight games called by text, scored <b>2&nbsp;/&nbsp;3&nbsp;/&nbsp;5</b> in a spreadsheet that never sleeps. This is the season so far &mdash; for the data nerds among us.</span>
+      <span class="small">Seven people. Nine matchdays. Thirty-two games called by text, scored <b>2&nbsp;/&nbsp;3&nbsp;/&nbsp;5</b> in a spreadsheet that never sleeps. This is the season so far &mdash; for the data nerds among us.</span>
     </h1>
 
     <div class="kicker">
-      <span><b class="num">28</b> games predicted</span><span class="dot">●</span>
+      <span><b class="num">32</b> games predicted</span><span class="dot">●</span>
       <span><b class="num">7</b> rival forecasters</span><span class="dot">●</span>
       <span><b class="num">1</b> lead change that mattered</span><span class="dot">●</span>
-      <span>Jun 11&ndash;18, 2026</span>
+      <span>Jun 11&ndash;19, 2026</span>
     </div>
 
     <div class="scoreboard" id="scoreboard"></div>
@@ -329,7 +329,7 @@
     <div class="sec-head rv">
       <p class="eyebrow">06 — Swing for the fences</p>
       <h2>The boldest calls</h2>
-      <p>Most goals stuffed into a single prediction. Top of the list: Gabe&rsquo;s six-nil for Spain &mdash; filed on the exact day Cape&nbsp;Verde sent them home.</p>
+      <p>Most goals stuffed into a single prediction. New leader: George&rsquo;s <b>Brazil 6&ndash;1 Haiti</b> on Matchday&nbsp;9 &mdash; just ahead of Gabe&rsquo;s six-nil for Spain, which he filed on the exact day Cape&nbsp;Verde sent them home.</p>
     </div>
     <div class="panel rv"><div class="bold-list" id="bold"></div></div>
   </section>
@@ -362,7 +362,7 @@
   <footer>
     <div class="rv">
       <div style="font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Full time — for now</div>
-      Built from the group chat&rsquo;s own record: <span class="num">8</span> matchdays, <span class="num">28</span> games, <span class="num">196</span> predictions, and one spreadsheet kept by Jake.
+      Built from the group chat&rsquo;s own record: <span class="num">9</span> matchdays, <span class="num">32</span> games, <span class="num">224</span> predictions, and one spreadsheet kept by Jake.
       Standings are the family&rsquo;s official totals; each day&rsquo;s points reconcile exactly to them. The cup rolls on.
       <div style="margin-top:14px;color:var(--muted-2)">&ldquo;The data nerds among us want more data.&rdquo; &mdash; Lloyd, having the last word.</div>
     </div>
@@ -373,42 +373,43 @@
 const D = {
   players:["Jon","George","Jake","Lainie","Gabe","Sophie","Lloyd"],
   color:{Jon:"#F5C518",George:"#FF3D7F",Jake:"#46C7E8",Lainie:"#B388FF",Gabe:"#FF9F45",Sophie:"#5FD08A",Lloyd:"#6E8BFF"},
-  // cumulative totals, index 0..8 (0 = start)
+  // cumulative totals, index 0..N (0 = start), one entry per matchday — charts derive N from this
   cum:{
-    Jon:[0,5,7,10,20,25,36,45,49],
-    George:[0,8,11,16,23,25,32,40,46],
-    Jake:[0,7,10,12,19,21,30,37,39],
-    Lainie:[0,3,5,10,15,15,27,32,38],
-    Gabe:[0,5,8,11,13,13,25,30,33],
-    Sophie:[0,0,2,5,12,14,22,29,31],
-    Lloyd:[0,3,5,8,12,12,21,25,30],
+    Jon:[0,5,7,10,20,25,36,45,49,55],
+    George:[0,8,11,16,23,25,32,40,46,52],
+    Jake:[0,7,10,12,19,21,30,37,39,45],
+    Lainie:[0,3,5,10,15,15,27,32,38,47],
+    Gabe:[0,5,8,11,13,13,25,30,33,43],
+    Sophie:[0,0,2,5,12,14,22,29,31,38],
+    Lloyd:[0,3,5,8,12,12,21,25,30,38],
   },
-  dayLabel:["","MD1","MD2","MD3","MD4","MD5","MD6","MD7","MD8"],
-  dayDate:["","Jun 11","Jun 12","Jun 13","Jun 14","Jun 15","Jun 16","Jun 17","Jun 18"],
+  dayLabel:["","MD1","MD2","MD3","MD4","MD5","MD6","MD7","MD8","MD9"],
+  dayDate:["","Jun 11","Jun 12","Jun 13","Jun 14","Jun 15","Jun 16","Jun 17","Jun 18","Jun 19"],
   fp:{ // n, avgGoals, drawRate, favScore, favCount, role, blurb
-    Jon:{role:"The Closer",pts:49,rank:1,avg:3.29,draw:.214,fav:"2-2",favN:5,
+    Jon:{role:"The Closer",pts:55,rank:1,avg:3.29,draw:.214,fav:"2-2",favN:5,
       quote:"I’m barely hanging on to the top flight",
-      fp:"Most goals per game (<b>3.29</b>) and the highest draw rate (<b>21%</b>) — pure chaos, and it’s winning."},
-    George:{role:"The Frontrunner",pts:46,rank:2,avg:3.14,draw:.143,fav:"2-1",favN:4,
+      fp:"Most goals per game (<b>3.29</b>) and the highest draw rate (<b>21%</b>) — pure chaos, and it’s still on top."},
+    George:{role:"The Frontrunner",pts:52,rank:2,avg:3.14,draw:.143,fav:"2-1",favN:4,
       quote:"It’s lonely at the top",
       fp:"Led matchdays 1–5. Also the chat’s resident fact-checker — corrected his own Canada dig with a citation."},
-    Jake:{role:"The Statistician",pts:39,rank:3,avg:3.00,draw:.107,fav:"3-1",favN:6,
+    Lainie:{role:"The Matriarch",pts:47,rank:3,avg:2.43,draw:.143,fav:"2-1",favN:5,
+      quote:"They’re buns!",
+      fp:"The cup’s most conservative scorer (<b>2.43</b> g/game) — and stormed onto the podium with a <b>+9</b> on Matchday 9."},
+    Jake:{role:"The Statistician",pts:45,rank:4,avg:3.00,draw:.107,fav:"3-1",favN:6,
       quote:"I’ve made a spreadsheet which updates and I’ll send rankings",
       fp:"Keeper of the official scores. Lowest draw rate (<b>11%</b>); reaches for <b>3-1</b> on reflex (×6)."},
-    Lainie:{role:"The Matriarch",pts:38,rank:4,avg:2.43,draw:.143,fav:"2-1",favN:5,
-      quote:"They’re buns!",
-      fp:"The cup’s most conservative scorer (<b>2.43</b> g/game) — yet tied the single biggest day (<b>+12</b>)."},
-    Gabe:{role:"The Commissioner",pts:33,rank:5,avg:3.17,draw:.167,fav:"2-0",favN:4,
+    Gabe:{role:"The Commissioner",pts:43,rank:5,avg:3.17,draw:.167,fav:"2-0",favN:4,
       quote:"Somehow I forgot gyokeres played for Sweden",
-      fp:"Founded the league and wrote the rules. Filed the boldest call of all — <b>Spain 6-0</b>."},
-    Sophie:{role:"The Rookie",pts:31,rank:6,avg:2.78,draw:.174,fav:"1-2",favN:5,
-      quote:"Figured it out! Watching Belgium v Egypt by the creek",
-      fp:"Joined late on day one — “Well in Sophie” — and climbed past Gabe and Lloyd."},
-    Lloyd:{role:"The Data Nerd",pts:30,rank:7,avg:2.57,draw:.143,fav:"2-1",favN:4,
+      fp:"Founded the league and wrote the rules. Erupted for a season-best <b>+10</b> on Matchday 9."},
+    Lloyd:{role:"The Data Nerd",pts:38,rank:6,avg:2.57,draw:.143,fav:"2-1",favN:4,
       quote:"The data nerds among us want more data",
-      fp:"Currently 7th — “back in the game, kind of” — after a closing <b>+5</b>, his second-best day. The reason this page exists."},
+      fp:"Back in the game for real — a season-best <b>+8</b> on Matchday 9 to climb off the bottom. The reason this page exists."},
+    Sophie:{role:"The Rookie",pts:38,rank:7,avg:2.78,draw:.174,fav:"1-2",favN:5,
+      quote:"Figured it out! Watching Belgium v Egypt by the creek",
+      fp:"Joined late on day one — “Well in Sophie” — and has kept pace all the way up."},
   },
   boldest:[
+    {g:7,by:"George",d:9,m:"Brazil 6-1 Haiti",v:""},
     {g:6,by:"Gabe",d:5,m:"Spain 6-0 Cape Verde",v:"whiff",note:"filed on Draw Day"},
     {g:5,by:"George",d:4,m:"Germany 5-0 Curaçao",v:""},
     {g:5,by:"George",d:5,m:"Spain 5-0 Cape Verde",v:"whiff"},
@@ -430,6 +431,8 @@ const D = {
     {s:"Lainie Yarris",me:false,t:"It’s draw day!"},
     {s:"Lloyd",me:true,t:"Were there more ties today, or more posts?"},
     {s:"Jake Yarris",me:false,t:"Lloyds back in the game. Kind of"},
+    {s:"Gabe Yarris",me:false,t:"Absolute joke of a finish"},
+    {s:"Jake Yarris",me:false,t:"Thunder from cunha!! Vamos a seleção 🇧🇷"},
     {s:"Lloyd",me:true,t:"The data nerds among us want more data"},
   ],
 };
@@ -441,12 +444,12 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
 /* ---------- hero scoreboard ---------- */
 (function(){
-  const order=[["Jon",1],["George",2],["Jake",3]];
-  const tag={Jon:"Champion · 4th → 1st",George:"Led 5 days · “lonely at the top”",Jake:"Keeper of the spreadsheet"};
-  const crown={Jon:"👑",George:"",Jake:""};
+  const order=[["Jon",1],["George",2],["Lainie",3]];
+  const tag={Jon:"Champion · holds at #1",George:"2nd · “lonely at the top”",Lainie:"Surged from 4th · +9 on MD9"};
+  const crown={Jon:"👑",George:"",Lainie:""};
   const host=document.getElementById("scoreboard");
   order.forEach(([p,r])=>{
-    const pts=D.cum[p][8];
+    const pts=D.cum[p][D.cum[p].length-1];
     const d=document.createElement("div");
     d.className="sb g"+r;
     d.innerHTML=`<span class="bar"></span>
@@ -462,13 +465,14 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 /* ---------- RACE CHART ---------- */
 function buildRace(){
   const W=920,H=440,padL=34,padR=92,padT=24,padB=34;
-  const days=8, maxY=50;
+  const days=D.cum.Jon.length-1;
+  const maxY=Math.max(50,Math.ceil(Math.max(...D.players.flatMap(p=>D.cum[p]))/10)*10);
   const x=i=>padL+(W-padL-padR)*(i/days);
   const y=v=>padT+(H-padT-padB)*(1-v/maxY);
   const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:"img","aria-label":"Cumulative points by matchday for all seven players"});
 
   // gridlines + y labels
-  for(let v=0;v<=50;v+=10){
+  for(let v=0;v<=maxY;v+=10){
     svg.appendChild(el("line",{x1:padL,y1:y(v),x2:W-padR,y2:y(v),stroke:"#1c2c24","stroke-width":1}));
     const tl=el("text",{x:padL-8,y:y(v)+4,fill:"#5f7568","font-size":11,"text-anchor":"end","font-family":"var(--mono)"});tl.textContent=v;svg.appendChild(tl);
   }
@@ -483,20 +487,24 @@ function buildRace(){
   md6.textContent="LEAD CHANGE";svg.appendChild(md6);
 
   const paths={};
+  // de-collide end labels (e.g. ties like 38/38) by enforcing a min vertical gap
+  const ends=D.players.map(p=>({p,y:y(D.cum[p][days])})).sort((a,b)=>a.y-b.y);
+  const GAP=14;
+  for(let i=1;i<ends.length;i++) if(ends[i].y-ends[i-1].y<GAP) ends[i].y=ends[i-1].y+GAP;
+  const labY=Object.fromEntries(ends.map(e=>[e.p,e.y]));
   D.players.forEach(p=>{
     const pts=D.cum[p].map((v,i)=>[x(i),y(v)]);
     const dstr="M"+pts.map(q=>q[0].toFixed(1)+","+q[1].toFixed(1)).join(" L");
     const champ=(p==="Jon");
     const path=el("path",{d:dstr,fill:"none",stroke:D.color[p],"stroke-width":champ?3.6:2.2,
       "stroke-linejoin":"round","stroke-linecap":"round","data-p":p,opacity:champ?1:.92});
-    const len=path.getTotalLength?0:0;
     path.style.strokeDasharray=2000;path.style.strokeDashoffset=2000;
     svg.appendChild(path);paths[p]=path;
-    // end dot + label
+    // end dot + label (label y de-collided)
     const last=pts[pts.length-1];
     const dot=el("circle",{cx:last[0],cy:last[1],r:champ?5:3.5,fill:D.color[p],"data-p":p,class:"enddot"});dot.style.opacity=0;svg.appendChild(dot);
-    const lab=el("text",{x:last[0]+10,y:last[1]+4,fill:D.color[p],"font-size":champ?13:12,"font-family":"var(--mono)","font-weight":champ?"700":"500","data-p":p,class:"endlab"});
-    lab.textContent=`${p} ${D.cum[p][8]}`;lab.style.opacity=0;svg.appendChild(lab);
+    const lab=el("text",{x:last[0]+10,y:labY[p]+4,fill:D.color[p],"font-size":champ?13:12,"font-family":"var(--mono)","font-weight":champ?"700":"500","data-p":p,class:"endlab"});
+    lab.textContent=`${p} ${D.cum[p][days]}`;lab.style.opacity=0;svg.appendChild(lab);
   });
   return {svg,paths};
 }
@@ -507,7 +515,7 @@ document.getElementById("race-chart").appendChild(race.svg);
   const host=document.getElementById("race-legend");
   D.players.forEach(p=>{
     const c=document.createElement("button");c.className="chip";c.setAttribute("aria-pressed","false");c.style.color=D.color[p];c.dataset.p=p;
-    c.innerHTML=`<span class="sw" style="background:${D.color[p]}"></span><span style="color:var(--text)">${p}</span><span class="pt">${D.cum[p][8]}</span>`;
+    c.innerHTML=`<span class="sw" style="background:${D.color[p]}"></span><span style="color:var(--text)">${p}</span><span class="pt">${D.cum[p][D.cum[p].length-1]}</span>`;
     c.addEventListener("click",()=>toggleRace(p,c));
     host.appendChild(c);
   });
@@ -535,18 +543,21 @@ function animateRace(){
 /* ---------- HEATMAP ---------- */
 (function(){
   const head=document.getElementById("hm-head");
+  const N=D.cum.Jon.length-1;
+  head.style.gridTemplateColumns=`96px repeat(${N},1fr)`;
   head.appendChild(Object.assign(document.createElement("div"),{textContent:""}));
-  for(let d=1;d<=8;d++){
+  for(let d=1;d<=N;d++){
     const c=document.createElement("div");c.className="col"+(d===5?" cold":d===6?" hot":"");
     c.innerHTML=`<span>${D.dayLabel[d]}</span>`;head.appendChild(c);
   }
   const grid=document.getElementById("heatmap");
-  const ranked=[...D.players].sort((a,b)=>D.cum[b][8]-D.cum[a][8]);
-  let max=0;ranked.forEach(p=>{for(let d=1;d<=8;d++)max=Math.max(max,D.cum[p][d]-D.cum[p][d-1]);});
+  const ranked=[...D.players].sort((a,b)=>D.cum[b][N]-D.cum[a][N]);
+  let max=0;ranked.forEach(p=>{for(let d=1;d<=N;d++)max=Math.max(max,D.cum[p][d]-D.cum[p][d-1]);});
   ranked.forEach(p=>{
     const row=document.createElement("div");row.className="hm-row";
+    row.style.gridTemplateColumns=`96px repeat(${N},1fr)`;
     row.innerHTML=`<div class="hm-name"><span class="sw" style="background:${D.color[p]}"></span>${p}</div>`;
-    for(let d=1;d<=8;d++){
+    for(let d=1;d<=N;d++){
       const val=D.cum[p][d]-D.cum[p][d-1];
       const t=val/max; // 0..1
       // colour: blend pitch-dark -> pink for intensity
