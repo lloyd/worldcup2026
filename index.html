@@ -6,7 +6,7 @@
   <meta name="description" content="The Yarris × Hilaiel family World Cup 2026 prediction league — the season so far, told in data.">
   <meta name="theme-color" content="#0B1511">
   <meta property="og:title" content="World Cup 2026 — The Prediction League">
-  <meta property="og:description" content="Seven forecasters, fifteen matchdays, one spreadsheet. The season so far.">
+  <meta property="og:description" content="Seven forecasters, sixteen matchdays, one spreadsheet. The season so far.">
   <meta property="og:type" content="website">
   <title>World Cup 2026 — The Yarris–Hilaiel Prediction League</title>
   <style>
@@ -130,6 +130,14 @@
   .hm-call .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:3px}
   .hm-call.cold .lbl{color:var(--cyan)} .hm-call.hot .lbl{color:var(--accent)}
 
+  /* "off the pitch" — a quiet real-life moment the chat scrolled past */
+  .offpitch{margin-top:26px;border-left:2px solid var(--accent);
+    background:linear-gradient(90deg,rgba(255,61,127,.05),transparent);
+    border-radius:0 10px 10px 0;padding:14px 18px;max-width:700px;color:var(--muted)}
+  .offpitch .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px}
+  .offpitch p{font-size:15px;line-height:1.55;margin:0}
+  .offpitch b{color:var(--text)}
+
   /* stat grid for matchday spotlight */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   .big-stat{font-family:var(--mono);font-size:clamp(40px,7vw,64px);font-weight:800;line-height:.95;font-variant-numeric:tabular-nums}
@@ -247,14 +255,14 @@
     <div class="floods"></div>
     <p class="eyebrow">The Yarris &times; Hilaiel group chat &nbsp;·&nbsp; <b>FIFA World Cup 2026</b></p>
     <h1>The Prediction<br>League
-      <span class="small">Seven people. Fifteen matchdays. Sixty games called by text, scored <b>2&nbsp;/&nbsp;3&nbsp;/&nbsp;5</b> in a spreadsheet that never sleeps. This is the season so far &mdash; for the data nerds among us.</span>
+      <span class="small">Seven people. Sixteen matchdays. Sixty-six games called by text, scored <b>2&nbsp;/&nbsp;3&nbsp;/&nbsp;5</b> in a spreadsheet that never sleeps. This is the season so far &mdash; for the data nerds among us.</span>
     </h1>
 
     <div class="kicker">
-      <span><b class="num">60</b> games predicted</span><span class="dot">●</span>
+      <span><b class="num">66</b> games predicted</span><span class="dot">●</span>
       <span><b class="num">7</b> rival forecasters</span><span class="dot">●</span>
-      <span><b class="num">3</b> lead changes that mattered</span><span class="dot">●</span>
-      <span>Jun 11&ndash;25, 2026</span>
+      <span><b class="num">4</b> lead changes that mattered</span><span class="dot">●</span>
+      <span>Jun 11&ndash;26, 2026</span>
     </div>
 
     <div class="scoreboard" id="scoreboard"></div>
@@ -264,13 +272,13 @@
   <section id="race">
     <div class="sec-head rv">
       <p class="eyebrow">01 — The title race</p>
-      <h2>George led, then Jon, then Lainie.<br>Now Gabe — on a record +17.</h2>
-      <p>Every line is one forecaster&rsquo;s running point total. George Hilaiel led from the opening whistle; Jon&rsquo;s <span class="num">+11</span> on Matchday&nbsp;6 ripped the throne away and held it six days. Then Lainie &mdash; the cup&rsquo;s most conservative scorer &mdash; went on a tear (a record <span class="num">+15</span> on MD12, then a third lone perfect on MD13) and ran the lead out to eight. On Matchday&nbsp;14 the Commissioner answered: Gabe&rsquo;s league-record <span class="num">+17</span> across a six-game slate seized the top. Matchday&nbsp;15 then dialed up the chaos &mdash; Germany, Japan and the USA all failed to win &mdash; and Gabe clung on with the lead trimmed to <span class="num">two</span>, George climbing to 3rd. <b>Three lead changes</b>, and the field is closing.</p>
+      <h2>George, Jon, Lainie, Gabe —<br>and now Lainie again.</h2>
+      <p>Every line is one forecaster&rsquo;s running point total. George Hilaiel led from the opening whistle; Jon&rsquo;s <span class="num">+11</span> on Matchday&nbsp;6 ripped the throne away and held it six days. Then Lainie &mdash; the cup&rsquo;s most conservative scorer &mdash; went on a tear (a record <span class="num">+15</span> on MD12, then a third lone perfect on MD13) and ran the lead out to eight. On Matchday&nbsp;14 the Commissioner answered: Gabe&rsquo;s league-record <span class="num">+17</span> across a six-game slate seized the top. Matchday&nbsp;15 dialed up the chaos &mdash; Germany, Japan and the USA all failed to win &mdash; and Gabe clung on by <span class="num">two</span>. Then Matchday&nbsp;16 flipped it again: Lainie answered with a <b>second +15</b> (a perfect Egypt 1&ndash;1 among it) to retake the throne, while down in the basement Lloyd finally climbed off the bottom. <b>Four lead changes</b>, and the throne won&rsquo;t sit still.</p>
     </div>
     <div class="panel rv">
       <div class="chart-scroll"><div id="race-chart"></div></div>
       <div class="legend" id="race-legend"></div>
-      <p class="race-note">▲&nbsp;<span>Three crossovers: <b>Jon</b> (MD6), <b>Lainie</b> (MD12), <b>Gabe</b> (MD14). Tap any name to isolate a line.</span></p>
+      <p class="race-note">▲&nbsp;<span>Four crossovers: <b>Jon</b> (MD6), <b>Lainie</b> (MD12), <b>Gabe</b> (MD14), <b>Lainie again</b> (MD16). Tap any name to isolate a line.</span></p>
     </div>
   </section>
 
@@ -373,6 +381,10 @@
       <p>The predictions are the excuse. This is the actual point.</p>
     </div>
     <div class="chat rv" id="chat"></div>
+    <div class="offpitch rv">
+      <span class="lbl">Off the pitch · Jun 26</span>
+      <p>Buried in the day&rsquo;s scroll &mdash; between a 5&ndash;0 and a disallowed goal &mdash; George let slip that his club had just lost a 3&ndash;1 tune-up to the pros of <b>Denver Summit FC</b>: &ldquo;tough 3&ndash;1 loss to denver summit 🦅🥲.&rdquo; The thread, nose-deep in scorelines, rolled right past it. (Denver&rsquo;s Lindsey Horan sat this one out &mdash; honeymoon.) We noticed.</p>
+    </div>
   </section>
 
   <!-- ========================= SCORING ========================= -->
@@ -393,7 +405,7 @@
   <footer>
     <div class="rv">
       <div style="font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Full time — for now</div>
-      Built from the group chat&rsquo;s own record: <span class="num">15</span> matchdays, <span class="num">60</span> games, <span class="num">420</span> predictions, and one spreadsheet kept by Jake (independently audited &mdash; reconciles to the family&rsquo;s official totals, to the point).
+      Built from the group chat&rsquo;s own record: <span class="num">16</span> matchdays, <span class="num">66</span> games, <span class="num">462</span> predictions, and one spreadsheet kept by Jake (independently audited &mdash; reconciles to the family&rsquo;s official totals, to the point).
       Standings are the family&rsquo;s official totals; each day&rsquo;s points reconcile exactly to them. The cup rolls on.
       <div style="margin-top:14px;color:var(--muted-2)">&ldquo;The data nerds among us want more data.&rdquo; &mdash; Lloyd, having the last word.</div>
     </div>
@@ -406,38 +418,38 @@ const D = {
   color:{Jon:"#F5C518",George:"#FF3D7F",Jake:"#46C7E8",Lainie:"#B388FF",Gabe:"#FF9F45",Sophie:"#5FD08A",Lloyd:"#6E8BFF"},
   // cumulative totals, index 0..N (0 = start), one entry per matchday — charts derive N from this
   cum:{
-    Jon:[0,5,7,10,20,25,36,45,49,55,59,67,72,76,85,91],
-    George:[0,8,11,16,23,25,32,40,46,52,54,62,73,80,84,94],
-    Jake:[0,7,10,12,19,21,30,37,39,45,50,58,66,72,81,88],
-    Lainie:[0,3,5,10,15,15,27,32,38,47,58,63,78,88,94,101],
-    Gabe:[0,5,8,11,13,13,25,30,33,43,54,62,72,80,97,103],
-    Sophie:[0,0,2,5,12,14,22,29,31,38,48,56,66,73,81,89],
-    Lloyd:[0,3,5,8,12,12,21,25,30,38,47,54,62,69,78,87],
+    Jon:[0,5,7,10,20,25,36,45,49,55,59,67,72,76,85,91,102],
+    George:[0,8,11,16,23,25,32,40,46,52,54,62,73,80,84,94,106],
+    Jake:[0,7,10,12,19,21,30,37,39,45,50,58,66,72,81,88,99],
+    Lainie:[0,3,5,10,15,15,27,32,38,47,58,63,78,88,94,101,116],
+    Gabe:[0,5,8,11,13,13,25,30,33,43,54,62,72,80,97,103,113],
+    Sophie:[0,0,2,5,12,14,22,29,31,38,48,56,66,73,81,89,102],
+    Lloyd:[0,3,5,8,12,12,21,25,30,38,47,54,62,69,78,87,101],
   },
-  dayLabel:["","MD1","MD2","MD3","MD4","MD5","MD6","MD7","MD8","MD9","MD10","MD11","MD12","MD13","MD14","MD15"],
-  dayDate:["","Jun 11","Jun 12","Jun 13","Jun 14","Jun 15","Jun 16","Jun 17","Jun 18","Jun 19","Jun 20","Jun 21","Jun 22","Jun 23","Jun 24","Jun 25"],
+  dayLabel:["","MD1","MD2","MD3","MD4","MD5","MD6","MD7","MD8","MD9","MD10","MD11","MD12","MD13","MD14","MD15","MD16"],
+  dayDate:["","Jun 11","Jun 12","Jun 13","Jun 14","Jun 15","Jun 16","Jun 17","Jun 18","Jun 19","Jun 20","Jun 21","Jun 22","Jun 23","Jun 24","Jun 25","Jun 26"],
   fp:{ // n, avgGoals, drawRate, favScore, favCount, role, blurb
-    Jon:{role:"The Closer",pts:91,rank:4,avg:3.29,draw:.214,fav:"2-2",favN:5,
+    Jon:{role:"The Closer",pts:102,rank:4,avg:3.29,draw:.214,fav:"2-2",favN:5,
       quote:"I’m barely hanging on to the top flight",
-      fp:"Most goals per game (<b>3.29</b>) and the highest draw rate (<b>21%</b>). A modest <b>+6</b> on a chaotic Matchday 15 slipped the deposed champ back to <b>4th</b> as George surged past."},
-    Lainie:{role:"The Matriarch",pts:101,rank:2,avg:2.43,draw:.143,fav:"2-1",favN:5,
+      fp:"Most goals per game (<b>3.29</b>) and the highest draw rate (<b>21%</b>). A <b>+11</b> on Matchday 16 lifts him to 102 — but he’s one of four players inside three points, dead in the middle of a mid-table logjam. <b>4th</b> on the tiebreak."},
+    Lainie:{role:"The Matriarch",pts:116,rank:1,avg:2.43,draw:.143,fav:"2-1",favN:5,
       quote:"It’s just ’cause I’m french",
-      fp:"The cup’s most conservative scorer (<b>2.43</b> g/game) sits <b>2nd</b> at 101 — a steady <b>+7</b> on Matchday 15 quietly closed Gabe’s lead to two. Still owns two of the cup’s rarest perfects."},
-    Gabe:{role:"The Commissioner",pts:103,rank:1,avg:3.17,draw:.167,fav:"2-0",favN:4,
+      fp:"The cup’s most conservative scorer (<b>2.43</b> g/game) is back on top — a <b>second +15</b> on Matchday 16, capped by a perfect Egypt 1–1, retook the throne off Gabe. The Matriarch refuses to go away."},
+    Gabe:{role:"The Commissioner",pts:113,rank:2,avg:3.17,draw:.167,fav:"2-0",favN:4,
       quote:"Setting up a potential double overtake tomorrow",
-      fp:"Founded the league, wrote the rules — and still runs it. A quiet <b>+6</b> on a chaotic Matchday 15 (his patriotic USA 5–0 backfired badly) trimmed the cushion to <b>two</b> — but the Commissioner leads at 103."},
-    George:{role:"The Frontrunner",pts:94,rank:3,avg:3.14,draw:.143,fav:"2-1",favN:4,
+      fp:"Founded the league and wrote the rules. Took over the scorekeeping for the weekend — then watched Lainie’s <b>+15</b> take the lead straight back. A <b>+10</b> on Matchday 16 leaves the Commissioner <b>2nd</b>, three adrift."},
+    George:{role:"The Frontrunner",pts:106,rank:3,avg:3.14,draw:.143,fav:"2-1",favN:4,
       quote:"That’s so generous that we might have to come to Portland 👀",
-      fp:"Led matchdays 1–5. Posted the <b>day’s best +10</b> on a chaos-soaked Matchday 15 — the lone soul to call Türkiye over USA, plus a perfect Curaçao 0–2 — climbing back to <b>3rd</b>."},
-    Jake:{role:"The Statistician",pts:88,rank:6,avg:3.00,draw:.107,fav:"3-1",favN:6,
+      fp:"Led matchdays 1–5. A composed <b>+12</b> on Matchday 16 — the day’s quiet workhorse haul — keeps him <b>3rd</b> at 106, hanging onto the leaders."},
+    Jake:{role:"The Statistician",pts:99,rank:7,avg:3.00,draw:.107,fav:"3-1",favN:6,
       quote:"I’ve made a spreadsheet which updates and I’ll send rankings",
-      fp:"Keeper of the official scores — racing this weekend, so the standings ran late. A <b>+7</b> (a perfect Curaçao 0–2) slipped him to <b>6th</b>. Lowest draw rate (<b>11%</b>); signature <b>3-1</b> (×6)."},
-    Sophie:{role:"The Rookie",pts:89,rank:5,avg:2.78,draw:.174,fav:"1-2",favN:5,
+      fp:"Keeper of the official scores — who handed the clipboard to Gabe for the weekend and promptly slid to <b>last</b>. A <b>+11</b> on Matchday 16 wasn’t enough; 99 points, dead 7th. Lowest draw rate (<b>11%</b>); signature <b>3-1</b> (×6)."},
+    Sophie:{role:"The Rookie",pts:102,rank:5,avg:2.78,draw:.174,fav:"1-2",favN:5,
       quote:"Figured it out! Watching Belgium v Egypt by the creek",
-      fp:"Joined late on day one — “Well in Sophie.” A tidy <b>+8</b> on Matchday 15 (a perfect Curaçao 0–2) edged her back ahead of Jake into <b>5th</b>."},
-    Lloyd:{role:"The Data Nerd",pts:87,rank:7,avg:2.57,draw:.143,fav:"2-1",favN:4,
+      fp:"Joined late on day one — “Well in Sophie.” A big <b>+13</b> on Matchday 16 pulled her level with Jon at 102, <b>5th</b> by the thinnest of margins — a cup-best haul for the Rookie."},
+    Lloyd:{role:"The Data Nerd",pts:101,rank:6,avg:2.57,draw:.143,fav:"2-1",favN:4,
       quote:"The data nerds among us want more data",
-      fp:"Still <b>7th</b> at 87 — but a <b>+9</b> on Matchday 15 (a perfect Curaçao 0–2) closed the gap to the pack to a single point. The cellar has never been this crowded. The reason this page exists."},
+      fp:"Out of the cellar at last. A <b>+14</b> on Matchday 16 — a perfect Egypt 1–1 among it — lifted the data nerd off the bottom for the <b>first time all cup</b>, up to <b>6th</b>. The reason this page exists, finally not in last."},
   },
   boldest:[
     {g:7,by:"George",d:9,m:"Brazil 6-1 Haiti",v:""},
@@ -461,6 +473,8 @@ const D = {
      note:"Her <b>third</b> lone perfect &mdash; Lainie now owns two of the three rarest calls in the cup. Everyone else had Croatia winning by two or three; she alone wrote the <b>1&ndash;0</b>, part of a <b>+10</b> Matchday 13 that stretched her lead to eight."},
     {home:"Spain",hs:4,as:0,away:"Saudi Arabia",day:11,by:["Lloyd"],called:1,of:7,badge:"Most improbable call",
      note:"The data nerd &mdash; dead last in the table &mdash; was the only soul to write it. Everyone else split Spain 3&ndash;0 or 4&ndash;1; Lloyd alone called <b>4&ndash;0</b>, then watched an offside flag wipe a late Saudi goal to save the clean sheet. &ldquo;OFFSIDE. YEEEESSS.&rdquo; Dad got 5."},
+    {home:"Egypt",hs:1,as:1,away:"Iran",day:16,by:["Lainie","Lloyd"],called:2,of:7,badge:"The draw that moved the table",
+     note:"Only two saw the stalemate &mdash; and what a two: Lainie, whose <b>+5</b> here capped the +15 that retook the lead, and Lloyd, whose matching 1&ndash;1 helped pry him out of last place for the first time all cup. The leader and the cellar, the very same scoreline."},
     {home:"France",hs:3,as:1,away:"Senegal",day:6,by:["Jon","Lainie"],called:2,of:7,badge:""},
     {home:"South Korea",hs:2,as:1,away:"Czechia",day:1,by:["George","Jake"],called:2,of:7,badge:"First perfects of the cup"},
     {home:"Mexico",hs:2,as:0,away:"South Africa",day:1,by:["Jon","Gabe"],called:2,of:6,badge:""},
@@ -517,6 +531,10 @@ const D = {
     {s:"Jake Yarris",me:false,t:"Wow a screamer!"},
     {s:"Jake Yarris",me:false,t:"Crazy sequence"},
     {s:"Lloyd",me:true,t:"😔"},
+    {s:"Lloyd",me:true,t:"Jake — I think G is at 94"},
+    {s:"Gabe Yarris",me:false,t:"No odegaard no haaland :("},
+    {s:"George Hilaiel",me:false,t:"Cabo verde is through to the knockout stage!!"},
+    {s:"Gabe Yarris",me:false,t:"The goal got disallowed 😔"},
   ],
 };
 
@@ -527,9 +545,9 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 
 /* ---------- hero scoreboard ---------- */
 (function(){
-  const order=[["Gabe",1],["Lainie",2],["George",3]];
-  const tag={Gabe:"Still #1 — lead trimmed to 2",Lainie:"2nd and closing · +7",George:"Day's best +10 · 4th → 3rd"};
-  const crown={Gabe:"👑",Lainie:"",George:""};
+  const order=[["Lainie",1],["Gabe",2],["George",3]];
+  const tag={Lainie:"Back on top — a 2nd +15",Gabe:"Lost the lead · 2nd, 3 back",George:"Holding 3rd · steady +12"};
+  const crown={Lainie:"👑",Gabe:"",George:""};
   const host=document.getElementById("scoreboard");
   order.forEach(([p,r])=>{
     const pts=D.cum[p][D.cum[p].length-1];
@@ -579,6 +597,12 @@ function buildRace(){
     svg.appendChild(el("rect",{x:x(13.5),y:padT,width:x(14)-x(13.5),height:H-padT-padB,fill:"rgba(255,159,69,.09)"}));
     const md14=el("text",{x:x(14)-4,y:H-padB-8,fill:"#FF9F45","font-size":10.5,"text-anchor":"end","font-family":"var(--mono)","letter-spacing":".08em"});
     md14.textContent="GABE #1";svg.appendChild(md14);
+  }
+  // MD16 highlight band — Lainie's RE-takeover (the fourth crossover)
+  if(days>=16){
+    svg.appendChild(el("rect",{x:x(15.5),y:padT,width:x(16)-x(15.5),height:H-padT-padB,fill:"rgba(179,136,255,.09)"}));
+    const md16=el("text",{x:x(16)-4,y:H-padB-8,fill:"#B388FF","font-size":10.5,"text-anchor":"end","font-family":"var(--mono)","letter-spacing":".08em"});
+    md16.textContent="LAINIE AGAIN";svg.appendChild(md16);
   }
 
   const paths={};
