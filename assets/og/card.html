@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!--
+  Social-share card (Open Graph / Twitter image), rendered to ../og-card.png.
+  Standalone 1200×630. Keep the STANDINGS array below in sync with index.html's D.cum
+  after each matchday, then re-render (command in CLAUDE.md §10). Bump ?v= in the meta too.
+-->
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ground:#0B1511; --panel:#11201A; --panel-2:#15281F; --line:#273a30;
+    --text:#EAF2EC; --muted:#8AA396; --muted-2:#5f7568; --accent:#FF3D7F; --gold:#F5C518;
+    --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Roboto,sans-serif;
+  }
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background:
+      radial-gradient(900px 460px at 82% -12%, rgba(255,61,127,.14), transparent 60%),
+      radial-gradient(820px 560px at 6% 118%, rgba(110,139,255,.13), transparent 60%),
+      linear-gradient(158deg,#0F1D16 0%,#0B1511 62%);
+    color:var(--text); font-family:var(--sans);
+    display:flex; gap:42px; padding:54px 56px;
+  }
+  /* subtle pitch center-circle behind everything */
+  .pitch{position:absolute;right:-120px;top:50%;transform:translateY(-50%);
+    width:520px;height:520px;border:2px solid rgba(255,255,255,.04);border-radius:50%;}
+  .pitch::after{content:"";position:absolute;inset:150px;border:2px solid rgba(255,255,255,.04);border-radius:50%}
+
+  .left{flex:0 0 452px;display:flex;flex-direction:column;position:relative;z-index:2}
+  .eyebrow{font-family:var(--mono);font-size:15px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  .eyebrow b{color:var(--accent);font-weight:600}
+  h1{font-size:62px;line-height:.94;letter-spacing:-.02em;font-weight:800;margin:20px 0 0}
+  h1 .p{color:var(--accent)}
+  .tag{font-size:23px;line-height:1.32;color:#d7e6dd;margin-top:24px;font-weight:500;max-width:430px}
+  .tag b{color:var(--gold);font-weight:700}
+  .foot{margin-top:auto;font-family:var(--mono);font-size:15px;color:var(--muted-2);letter-spacing:.03em}
+  .foot b{color:var(--muted)}
+  .foot .u{color:var(--accent)}
+
+  .board{flex:1;position:relative;z-index:2;background:linear-gradient(180deg,#16281F,#101E18);
+    border:1px solid var(--line);border-radius:22px;padding:18px 24px;
+    display:flex;flex-direction:column;justify-content:center;
+    box-shadow:0 34px 70px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.03)}
+  .board .bhead{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted-2);display:flex;justify-content:space-between;padding:0 2px 10px;border-bottom:1px solid var(--line-soft)}
+  .row{display:grid;grid-template-columns:30px 50px 1fr auto;align-items:center;gap:14px;padding:7px 2px}
+  .rk{font-family:var(--mono);font-size:17px;color:var(--muted-2);text-align:right}
+  .row.lead .rk{color:var(--gold)}
+  .ava{width:50px;height:50px;border-radius:50%;object-fit:cover;object-position:50% 8%;
+    background:#0B1511;border:2.5px solid var(--c);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+  .who{min-width:0}
+  .nm{font-size:22px;font-weight:700;line-height:1.05;display:flex;align-items:center;gap:8px}
+  .row.lead .nm{color:var(--gold)}
+  .crown{font-size:17px}
+  .bar{height:7px;border-radius:5px;margin-top:7px;background:var(--c);box-shadow:0 0 14px -2px var(--c)}
+  .pts{font-family:var(--mono);font-size:27px;font-weight:700;text-align:right;letter-spacing:-.01em;min-width:70px}
+  .row.lead .pts{color:var(--gold)}
+</style>
+</head>
+<body>
+  <div class="pitch"></div>
+  <div class="left">
+    <div class="eyebrow">The Yarris <b>×</b> Hilaiel group chat</div>
+    <h1>THE<br><span class="p">PREDICTION</span><br>LEAGUE</h1>
+    <div class="tag">Seven forecasters. One merciless spreadsheet. <b>Everyone’s a genius ’til it updates.</b></div>
+    <div class="foot">FIFA WORLD CUP 2026 &middot; <b>26 matchdays</b>, doubled in the knockouts<br><span class="u">lloyd.github.io/worldcup2026</span></div>
+  </div>
+
+  <div class="board">
+    <div class="bhead"><span>Standings</span><span>Points</span></div>
+    <div id="rows"></div>
+  </div>
+
+<script>
+  // Keep in sync with index.html D.cum (final totals) + colors. Bar = pts / leader.
+  const STAND = [
+    ["Lainie", 254, "#B388FF", true],
+    ["Lloyd",  214, "#6E8BFF", false],
+    ["Gabe",   209, "#FF9F45", false],
+    ["Sophie", 203, "#5FD08A", false],
+    ["George", 190, "#FF3D7F", false],
+    ["Jake",   187, "#46C7E8", false],
+    ["Jon",    185, "#F5C518", false],
+  ];
+  const max = Math.max(...STAND.map(s=>s[1]));
+  const min = Math.min(...STAND.map(s=>s[1]));
+  const rows = STAND.map(([nm,pts,c,lead],i)=>{
+    // spread the bar so the bunched pack still reads (35%–100%)
+    const w = (35 + 65*(pts-min)/(max-min)).toFixed(1);
+    return `<div class="row ${lead?'lead':''}" style="--c:${c}">
+      <div class="rk">${i+1}</div>
+      <img class="ava" src="../chibi/${nm.toLowerCase()}.webp" alt="">
+      <div class="who">
+        <div class="nm">${nm}${lead?'<span class="crown">👑</span>':''}</div>
+        <div class="bar" style="width:${w}%"></div>
+      </div>
+      <div class="pts">${pts}</div>
+    </div>`;
+  }).join("");
+  document.getElementById("rows").innerHTML = rows;
+</script>
+</body>
+</html>
