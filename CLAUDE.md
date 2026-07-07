@@ -121,6 +121,10 @@ Trigger: the user drops a chat image, a multi‑image set, or a PDF (e.g. on `~/
    - New banter worth featuring → add to `D.chat`.
    - New predictions (optional) → only matter for `D.fp` fingerprints (`avg`, `draw`, `fav`).
      Recompute from the predictions if you want them exact; otherwise leave fingerprints as‑is.
+   - **Social-share card** (the link-unfurl image) → update `assets/og/card.html`'s `STAND`
+     array (name, total, color, isLeader — in rank order) to the new standings, then re-render
+     and bump the OG cache-buster (see §10). Also re-check the `og:image:alt` / footer matchday
+     count in `index.html`'s `<head>` and the tagline if the story shifted.
 6. **Validate** before shipping:
    - Final totals (`D.cum[*][last]`) match the screenshot exactly.
    - Each day's deltas are non‑negative and look sane (nobody loses points).
@@ -274,3 +278,32 @@ normally never touch gh-pages by hand.
   accent (`--accent:#FF3D7F`, a literal running joke in the chat), spreadsheet‑gold for 1st
   (`--gold:#F5C518`). Numbers everywhere are tabular monospace (the "data nerd" identity).
 ```
+
+---
+
+## 10. Social‑share card (the link‑unfurl image)
+
+When the live URL is pasted into iMessage / Slack / Twitter, it unfurls using the
+`og:`/`twitter:` tags in `index.html`'s `<head>`. The image is **`assets/og-card.png`**
+(1200×630 logical, rendered at 2×), generated from the standalone, on‑brand card at
+**`assets/og/card.html`** (same palette/fonts as the site; pulls chibis from `../chibi/`).
+
+**To refresh each matchday** (standings change → the card must too):
+
+1. Edit the `STAND` array in `assets/og/card.html` — `[name, total, "#color", isLeader]` in
+   **rank order** (leader first, `isLeader:true` gets the 👑 + gold). Colors are the same
+   per‑player hexes as `D.color` (see §3). Update the "N matchdays" line + tagline if the story moved.
+2. Re‑render to `assets/og-card.png`:
+   ```bash
+   CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=2 \
+     --window-size=1200,630 --screenshot=assets/og-card.png "file://$PWD/assets/og/card.html"
+   ```
+   (Look at it. ~750 KB PNG is fine.)
+3. **Bump the cache‑buster** in `<head>`: change every `og-card.png?v=NN` (og:image,
+   og:image:secure_url, twitter:image) to the new matchday number — iMessage/Twitter cache the
+   image by URL, so without a new `?v=` the unfurl keeps the stale card. Refresh `og:image:alt`
+   (names the leader) too.
+
+The card is committed and deployed like everything else (relative `assets/` paths). Scrapers cache
+aggressively; to force a re‑crawl after shipping, the bumped `?v=` is what does it.
